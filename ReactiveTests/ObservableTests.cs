@@ -97,6 +97,24 @@ namespace Reactive.Tests
         }
 
         [TestMethod()]
+        public void MergeTest2()
+        {
+            Observable<int> observer1 = new Observable<int>();
+
+            Observable<int> observer2 = new Observable<int>();
+
+            Action<int> action = new Action<int>((int input) =>
+            {
+                Assert.IsTrue(true);
+            });
+
+            observer1.Merge(observer2).Subscribe(new OnNextAction<int>(action));
+
+            observer1.Emit(10);
+            observer2.Emit(20);
+        }
+
+        [TestMethod()]
         public void ScanTest()
         {
             Observable<string> observer1 = new Observable<string>();
