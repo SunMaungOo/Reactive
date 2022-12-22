@@ -74,5 +74,10 @@ namespace Reactive
         {
             return inner.Map(func);
         }
+
+        public IList<IObservable<Result>> Share(int branchCount)
+        {
+            return inner.Share(branchCount);
+        }
     }
 }

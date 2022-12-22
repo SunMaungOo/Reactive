@@ -66,6 +66,11 @@ namespace Reactive
             return inner.Scan(initialData, func, observerable);
         }
 
+        public IList<IObservable<T>> Share(int branchCount)
+        {
+            return inner.Share(branchCount);
+        }
+
         public IObservable<T> Subscribe(OnNext<T> handler)
         {
             inner.Subscribe(handler);

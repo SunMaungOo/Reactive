@@ -138,5 +138,31 @@ namespace Reactive.Tests
             observer2.Emit(2);
 
         }
+
+        [TestMethod()]
+        public void ShareTest()
+        {
+            Observable<int> baseObserver = new Observable<int>();
+
+            IList<IObservable<int>> branches = baseObserver.Share(2);
+
+            IObservable<int> observer1 = branches.ElementAt(0);
+
+            IObservable<int> observer2 = branches.ElementAt(1);
+
+            observer1.Subscribe(new OnNextAction<int>(x=> 
+            {
+                Assert.IsTrue(x == 10);
+            }
+            ));
+
+            observer2.Subscribe(new OnNextAction<int>(x =>
+            {
+                Assert.IsTrue(x == 10);
+            }
+            ));
+
+            baseObserver.Emit(10);
+        }
     }
 }

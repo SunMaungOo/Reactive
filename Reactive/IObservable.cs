@@ -21,5 +21,12 @@ namespace Reactive
         IObservable<T> Merge(IObservable<T> observable);
 
         IObservable<T> Scan<Result>(T initialData, Func<T, Result, T> func, IObservable<Result> observerable);
+
+        /// <summary>
+        /// Split it to multiple branch
+        /// </summary>
+        /// <param name="branchCount">How many branch we wanted to split</param>
+        /// <returns></returns>
+        IList<IObservable<T>> Share(int branchCount);
     }
 }

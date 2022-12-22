@@ -153,6 +153,30 @@ namespace Reactive
             return scanner;
         }
 
+        public IList<IObservable<T>> Share(int branchCount)
+        {
+            if(branchCount<=0)
+            {
+                throw new Exception("brach count must be greater than 1");
+            }
 
+            List<IObservable<T>> branches = new List<IObservable<T>>();
+
+            for(int i=0;i<branchCount;i++)
+            {
+                branches.Add(Create());
+            }
+
+            Subscribe(new OnNextAction<T>((T data) =>
+            {
+                branches.ForEach((IObservable<T> observer) =>
+                {
+                    observer.Emit(data);
+                });
+            }
+            ));
+
+            return branches;
+        }
     }
 }
